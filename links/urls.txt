@@ -1,0 +1,7 @@
+// how to handle symbolic data in clustering.
+
+http://stats.stackexchange.com/questions/28170/clustering-a-dataset-with-both-discrete-and-continuous-variables 
+
+// paper to handle categorical data in K-means
+
+http://www.cs.ust.hk/~qyang/Teaching/537/Papers/huang98extensions.pdf
