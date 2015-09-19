@@ -1,3 +1,9 @@
 awk -F',' ' { print NF }' // count number of columns 
 
 cut -d , -f42  kddcup.trasfrom | sort | uniq  // to get the distinct values in columns
+
+cut --complement -f 42 -d,  kddcup.trasfrom > kddcup.withoutclass  // take all columns except 42 column number 
+
+awk 'BEGIN{OFS=FS=","}$2=="tcp"{$2=0}$2=="udp"{$2=1}$2=="icmp"{$2=2}{print}' kddcup.withoutclass > kddcup.withoutclass.2ndcol  // replacing a column value
+
+cat /proc/meminfo // check ram in system

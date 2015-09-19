@@ -1,0 +1,19 @@
+Ubuntu and other Debian-based distributions
+
+echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
+sudo apt-get update
+sudo apt-get install sbt
+
+
+for using MLLIB 
+
+in dependency we have to write 
+
+libraryDependencies += "org.apache.spark" % "spark-mllib_2.10" % "1.1.0" % "provided"
+
+
+./spark-submit --class "Kmeans" --master local[4] Kmeans/target/scala-2.10/kmeans_2.10-1.0.jar
+
+
+--driver-memory 4G //if you face any error regarding rdd memory error
