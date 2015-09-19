@@ -1,0 +1,5 @@
+Number of Columns : 42 (including attack type) 
+
+Number of rows :4898431 
+
+There are 23 different attack types in data
