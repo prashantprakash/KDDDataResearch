@@ -1,0 +1,17 @@
+[0m[[0minfo[0m] [0mPackaging /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/kmeans_2.10-1.0.jar ...[0m
+[0m[[0mdebug[0m] [0mInput file mappings:[0m
+[0m[[0mdebug[0m] [0m	Kmeans$$anonfun$main$1.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans$$anonfun$main$1.class[0m
+[0m[[0mdebug[0m] [0m	Kmeans$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	Kmeans$$anonfun$1$$anonfun$apply$1.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans$$anonfun$1$$anonfun$apply$1.class[0m
+[0m[[0mdebug[0m] [0m	Kmeans$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	Kmeans.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans.class[0m
+[0m[[0mdebug[0m] [0m	Kmeans$$anonfun$2$$anonfun$3.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans$$anonfun$2$$anonfun$3.class[0m
+[0m[[0mdebug[0m] [0m	Kmeans$.class[0m
+[0m[[0mdebug[0m] [0m	  /Cloud/spark-1.4.1/bin/Kmeans/target/scala-2.10/classes/Kmeans$.class[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
