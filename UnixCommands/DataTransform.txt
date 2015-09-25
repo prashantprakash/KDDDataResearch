@@ -7,3 +7,9 @@ cut --complement -f 42 -d,  kddcup.trasfrom > kddcup.withoutclass  // take all c
 awk 'BEGIN{OFS=FS=","}$2=="tcp"{$2=0}$2=="udp"{$2=1}$2=="icmp"{$2=2}{print}' kddcup.withoutclass > kddcup.withoutclass.2ndcol  // replacing a column value
 
 cat /proc/meminfo // check ram in system
+
+check heap space in windows
+
+javaw -XX:+PrintFlagsFinal | find "MaxHeapSize" 
+
+javaw -XX:+PrintFlagsFinal | find "InitialHeapSize"
