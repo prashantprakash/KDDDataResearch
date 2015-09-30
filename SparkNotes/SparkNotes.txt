@@ -1,0 +1,5 @@
+15/09/28 17:46:54 INFO MasterWebUI: Started MasterWebUI at http://10.176.147.70:8080
+
+15/09/28 17:46:54 INFO Master: Starting Spark master at spark://cloudmaster3:7077
+
+https://spark.apache.org/docs/1.1.0/spark-standalone.html // for setting up spark on cluster
