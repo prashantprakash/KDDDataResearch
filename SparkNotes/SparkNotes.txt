@@ -3,3 +3,10 @@
 15/09/28 17:46:54 INFO Master: Starting Spark master at spark://cloudmaster3:7077
 
 https://spark.apache.org/docs/1.1.0/spark-standalone.html // for setting up spark on cluster
+
+// export variables to include pyspark
+
+export SPARK_HOME=/Cloud/spark-1.4.1 
+export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
+export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip:$PYTHONPATH
+

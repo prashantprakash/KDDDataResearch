@@ -13,3 +13,8 @@ check heap space in windows
 javaw -XX:+PrintFlagsFinal | find "MaxHeapSize" 
 
 javaw -XX:+PrintFlagsFinal | find "InitialHeapSize"
+
+awk -F , '$42 == "normal" { print }' kddcup.trasfrom | wc -l  // count of all the rows with column value as specified
+
+awk -F, 'BEGIN {x=1}; {if($39=="19)")print x; x++}' corrected | head 10 // print line number containing a specefic column value
+
