@@ -20,3 +20,10 @@ libraryDependencies += "org.apache.spark" % "spark-mllib_2.10" % "1.1.0" % "prov
 --driver-memory 4G //if you face any error regarding rdd memory error
 
 ./spark-submit --class "Kmeans" --master local[4] --driver-memory 12G Kmeans/target/scala-2.10/kmeans_2.10-1.0.jar
+
+// running DataInfo scala to get information about data
+./spark-submit --class "Datainfo" --master local[4] --driver-memory 12G datainfo/target/scala-2.10/datainfo_2.10-1.0.jar
+
+// running Kmeans under KmeanExp 
+
+./spark-submit --class "kmeans" --master local[4] --driver-memory 12G datainfo/target/scala-2.10/datainfo_2.10-1.0.jar

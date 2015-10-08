@@ -10,3 +10,6 @@ export SPARK_HOME=/Cloud/spark-1.4.1
 export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
 export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip:$PYTHONPATH
 
+https://www.quora.com/Data-Science/What-are-some-good-toy-problems-in-data-science
+
+http://nlp.stanford.edu/courses/cs224n/2012/reports/finalreport.pdf
