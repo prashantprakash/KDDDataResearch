@@ -5,3 +5,12 @@ http://stats.stackexchange.com/questions/28170/clustering-a-dataset-with-both-di
 // paper to handle categorical data in K-means
 
 http://www.cs.ust.hk/~qyang/Teaching/537/Papers/huang98extensions.pdf
+
+// How to write Kmeans clustering 
+http://www.cs.berkeley.edu/~rxin/ampcamp-ecnu/machine-learning-with-spark.html 
+
+
+// Music recommendation 
+
+https://spark-summit.org/2014/talk/music-recommendations-at-scale-with-spark
+
