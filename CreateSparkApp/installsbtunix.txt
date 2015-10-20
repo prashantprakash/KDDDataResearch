@@ -35,3 +35,5 @@ libraryDependencies += "org.apache.spark" % "spark-mllib_2.10" % "1.1.0" % "prov
 // running TrainTest
 
 ./spark-submit --class "Kmeans" --master local[4] --driver-memory 12G KmeansTrainTest/target/scala-2.10/kmeans_2.10-1.0.jar 
+
+// running Gaussian Train and Test
