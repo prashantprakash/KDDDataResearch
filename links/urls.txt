@@ -14,3 +14,7 @@ http://www.cs.berkeley.edu/~rxin/ampcamp-ecnu/machine-learning-with-spark.html
 
 https://spark-summit.org/2014/talk/music-recommendations-at-scale-with-spark
 
+
+// Description about data and protocols used in kddcupdata
+
+http://sersc.org/journals/IJDTA/vol6_no5/3.pdf
