@@ -1,0 +1,11 @@
+0            normal 4082603
+1            attack       1
+0            attack  815827
+(0,normal)
+(1,attack)
+TP is : 79074
+FP is : 231957
+TN is : 1
+FN is : 1
+precision is : 0
+recall is : 0
