@@ -1,0 +1,268 @@
+92            attack       8
+98            normal       1
+53            normal       1
+50            normal     129
+83            normal       9
+58            attack     501
+73            normal       7
+8            attack       1
+12            attack      60
+84            normal   26737
+75            attack       7
+85            normal      26
+52            attack  264053
+45            normal      35
+68            normal     224
+95            normal   18821
+1            attack       1
+99            attack      19
+99            normal      62
+13            attack      15
+51            normal       1
+26            attack       1
+14            attack       1
+18            normal      59
+65            normal      41
+83            attack       2
+0            normal  453686
+41            normal     594
+40            normal   19126
+78            normal       1
+15            attack    1898
+55            normal     365
+66            attack     150
+62            attack    2583
+97            attack       3
+48            normal   75546
+19            normal      11
+7            normal    2173
+12            normal     177
+10            normal       1
+37            attack      39
+33            attack       2
+72            attack       1
+17            normal     140
+30            normal  202100
+56            attack      22
+90            attack   13154
+39            attack    4052
+50            attack      38
+48            attack    8918
+32            normal    2461
+82            normal    1371
+31            normal       1
+22            normal       6
+34            normal       1
+11            normal       1
+54            attack     470
+0            attack   74267
+3            attack       2
+16            normal       1
+79            normal       2
+23            attack       5
+30            attack   28951
+6            normal       1
+25            normal      15
+13            normal       5
+89            normal      12
+92            normal      43
+96            normal    5452
+46            attack       4
+36            normal       1
+60            normal    1537
+66            normal     405
+37            normal     304
+59            normal   15103
+9            attack       1
+29            normal       1
+18            attack       1
+56            normal      99
+74            attack    3258
+87            normal       9
+88            attack      34
+39            normal   35816
+63            attack       3
+23            normal      22
+55            attack      79
+20            normal       3
+91            attack       4
+75            normal      46
+57            attack       4
+35            attack       4
+40            attack   10692
+17            attack      28
+94            normal     247
+32            attack      70
+27            attack       1
+19            attack       4
+35            normal      11
+27            normal       7
+61            attack       1
+60            attack    1140
+4            normal       1
+74            normal    4099
+57            normal      15
+88            normal     127
+90            normal   49248
+24            normal    6928
+44            normal      43
+64            attack  375196
+21            attack      26
+42            attack       1
+41            attack      67
+47            normal  114668
+96            attack    1378
+58            normal      80
+43            attack       1
+87            attack       2
+65            attack       8
+70            normal      20
+86            attack       7
+59            attack    1682
+20            attack       3
+2            normal       1
+86            normal      14
+15            normal    6275
+7            attack     224
+69            normal       3
+71            normal       1
+62            normal   22468
+5            normal       1
+38            normal       1
+44            attack      18
+94            attack      83
+61            normal      10
+25            attack       5
+68            attack      63
+28            normal       1
+77            attack       1
+80            attack       1
+76            attack    1049
+64            normal 1905851
+54            normal    4495
+81            attack     737
+69            attack       5
+46            normal       4
+76            normal   10032
+22            attack       1
+85            attack      14
+52            normal 1088484
+67            attack       1
+70            attack       5
+63            normal       1
+93            attack       1
+91            normal       7
+21            normal     103
+84            attack    2630
+82            attack     175
+95            attack    2061
+24            attack     784
+45            attack      16
+49            normal       1
+81            normal    6565
+47            attack   15031
+(69,attack)
+(0,normal)
+(88,normal)
+(5,normal)
+(10,normal)
+(56,normal)
+(42,attack)
+(24,normal)
+(37,normal)
+(25,normal)
+(52,normal)
+(14,attack)
+(93,attack)
+(57,normal)
+(78,normal)
+(29,normal)
+(84,normal)
+(61,normal)
+(89,normal)
+(1,attack)
+(74,normal)
+(6,normal)
+(60,normal)
+(85,normal)
+(28,normal)
+(38,normal)
+(70,normal)
+(21,normal)
+(33,attack)
+(92,normal)
+(65,normal)
+(97,attack)
+(9,attack)
+(53,normal)
+(77,attack)
+(96,normal)
+(13,attack)
+(41,normal)
+(73,normal)
+(2,normal)
+(32,normal)
+(34,normal)
+(45,normal)
+(64,normal)
+(17,normal)
+(22,normal)
+(44,normal)
+(59,normal)
+(27,normal)
+(71,normal)
+(12,normal)
+(54,normal)
+(49,normal)
+(86,normal)
+(81,normal)
+(76,normal)
+(7,normal)
+(39,normal)
+(98,normal)
+(91,normal)
+(66,normal)
+(3,attack)
+(80,attack)
+(35,normal)
+(48,normal)
+(63,attack)
+(18,normal)
+(95,normal)
+(50,normal)
+(67,attack)
+(16,normal)
+(31,normal)
+(11,normal)
+(72,attack)
+(43,attack)
+(99,normal)
+(87,normal)
+(40,normal)
+(26,attack)
+(55,normal)
+(23,normal)
+(8,attack)
+(75,normal)
+(58,attack)
+(82,normal)
+(36,normal)
+(30,normal)
+(51,normal)
+(19,normal)
+(4,normal)
+(79,normal)
+(94,normal)
+(47,normal)
+(15,normal)
+(68,normal)
+(62,normal)
+(90,normal)
+(83,normal)
+Cluster number is: 46
+TP is : 79068
+FP is : 231949
+TN is : 9
+FN is : 5
+precision is : 0
+recall is : 0
