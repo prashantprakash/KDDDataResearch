@@ -44,3 +44,7 @@ libraryDependencies += "org.apache.spark" % "spark-mllib_2.10" % "1.1.0" % "prov
 // running PCA for train and test
 
 ./spark-submit --class "PCA" --master local[4] --driver-memory 12G PCATrainTest/target/scala-2.10/pca_2.10-1.0.jar
+
+// running PCA Anomaly 
+
+./spark-submit --class "PCA" --master local[4] --driver-memory 12G PCANormal/target/scala-2.10/pca_2.10-1.0.jar 10 10 70000 
