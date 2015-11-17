@@ -51,3 +51,14 @@ libraryDependencies += "org.apache.spark" % "spark-mllib_2.10" % "1.1.0" % "prov
 
 
 ./spark-submit --class "Clusterscore" --master local[4] --driver-memory 12G clusterscore/target/scala-2.10/clusterscore_2.10-1.0.jar
+
+
+./spark-submit --class "KMeans" --master local[4] --driver-memory 12G KmeansWithCategory/target/scala-2.10/kmeans_2.10-1.0.jar
+
+
+./spark-submit --class "PCA" --master local[4] --driver-memory 12G PCAWithCategory/target/scala-2.10/pca_  2.10-1.0.jar
+
+./spark-submit --class "LOF" --master local[4] --driver-memory 12G LOF/target/scala-2.10/lof_2.10-1.0.jar 
+
+
+https://issues.apache.org/jira/browse/SPARK-4038

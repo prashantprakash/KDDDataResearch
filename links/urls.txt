@@ -1,3 +1,7 @@
+// very impprtant
+https://gist.github.com/bigsnarfdude/baf15b8c7eb985f8241b
+
+
 // how to handle symbolic data in clustering.
 
 http://stats.stackexchange.com/questions/28170/clustering-a-dataset-with-both-discrete-and-continuous-variables 
