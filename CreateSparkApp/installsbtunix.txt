@@ -1,3 +1,5 @@
+https://spark.apache.org/docs/1.5.2/api/scala/index.html#org.apache.spark.mllib.linalg.distributed.BlockMatrix // spark api
+
 Ubuntu and other Debian-based distributions
 
 echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
