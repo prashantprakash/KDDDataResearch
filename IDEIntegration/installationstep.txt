@@ -1,0 +1,10 @@
+http://www.nodalpoint.com/development-and-deployment-of-spark-applications-with-scala-eclipse-and-sbt-part-1-installation-configuration/ 
+
+
+
+// installing sbt 
+
+curl -O https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz 
+
+
+
