@@ -62,3 +62,6 @@ libraryDependencies += "org.apache.spark" % "spark-mllib_2.10" % "1.1.0" % "prov
 
 
 https://issues.apache.org/jira/browse/SPARK-4038
+
+
+./spark-submit --class "SVD" --master local[4] --driver-memory 12G SVD/target/scala-2.10/svd_2.10-1.0.jar
