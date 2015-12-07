@@ -6,10 +6,10 @@ import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.rdd._
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.mllib.linalg.distributed.RowMatrix
-// import org.apache.spark.mllib.linalg.distributed.DenseMatrix
- // import org.apache.spark.mllib.rdd.VectorRDDS
-// import org.apache.spark.mllib.linalg.Vectors
- import org.apache.spark.mllib.linalg.Matrices
+import org.apache.spark.mllib.linalg.Matrices
+import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.feature.PCA
+
 
 object PCA {
   def main(args: Array[String]) {
@@ -27,51 +27,47 @@ object PCA {
             buffer.remove(1,3)
             val label = buffer.remove(buffer.length-1)
             val vector = Vectors.dense(buffer.map(_.toDouble).toArray)
-            (label,vector)
+            var classlabel = 0.0 
+            if(label != "normal.") {
+                classlabel = 1.0
+            }
+            // (label,Vectors.dense(vector.t
+            new LabeledPoint(classlabel, Vectors.dense(vector.toArray))
+        }
+
+
+    val labelCopyData = data.map{line =>
+            val buffer = line.split(",").toBuffer
+            buffer.remove(1,3)
+            val label = buffer.remove(buffer.length-1)
+            val vector = Vectors.dense(buffer.map(_.toDouble).toArray)
+            (Vectors.dense(vector.toArray))
         }
 
    // run PCA on train data to get top k PCA 
    val pcaK =10 
-   
-   val mat = new RowMatrix(labelData.values)
+ 
+   val mat = new RowMatrix(labelCopyData)
 
    // Compute principal components.
    val pc = mat.computePrincipalComponents(pcaK)
 
    val projected = mat.multiply(pc).rows
-   // projected.saveAsTextFile("PCA10Data")
-
-   
 
    // train the model with the new data m*k 
 
-   val numClusters = 5
+   val numClusters = 120
    val numIterations = 10     
    val model = KMeans.train(projected, numClusters, numIterations)
    
-   // run the train data back to model to get the clusterid Information
-    var trainind =0
-    val trainlabels = labelData.keys.toArray
-   //  println(labelTestData.keys)
-    val clusterstrainLabelCount =  projected.map {line =>
-        val cluster = model.predict(line)
-       // val label = trainlabels.apply(trainind)
-        var label = "normal"
-        if(trainlabels.apply(trainind) != "normal.") {
-           label = "attack"
-        }
-        trainind += 1
+   val pca = new PCA(pcaK).fit(labelData.map(_.features))
 
-    (cluster, label)
+   val projectednew = labelData.map(p => p.copy(features = pca.transform(p.features)))
+      
+    val clusterstrainLabelCount =  projectednew.map {point =>
+        val cluster = model.predict(point.features)
+    (cluster, point.label)
         }.countByValue
-  
-   // change the others label as attack (if its not normal) 
-   
-   /* val clusterNormalAttack = clusterstrainLabelCount.toSeq.foreach{
-           case((cluster,label),count) =>
-             println(f"$cluster%1s$label%18s$count%8s")
-   
-     } */
 
     var clustermap:Map[Int,String] = Map()
     var i =0
@@ -80,9 +76,9 @@ object PCA {
         var attackCount =0L
          clusterstrainLabelCount.toSeq.foreach{
            case((cluster,label),count) =>
-             if(i == cluster && label == "normal") {
+             if(i == cluster && label.toDouble == 0.0) {
                 normalCount += count
-             } else if( i == cluster && label == "attack") {
+             } else if( i == cluster && label.toDouble == 1.0) {
                 attackCount += count
              } 
 
@@ -92,10 +88,8 @@ object PCA {
           } else if(attackCount > normalCount) {
             clustermap += ( i -> "attack")
          }
-    }   
-   
-    // print clustermap 
-    clustermap.foreach(println)
+    }
+
     
    // load test data and transform this to new m*k format 
 
@@ -106,74 +100,44 @@ object PCA {
             buffer.remove(1,3)
             val label = buffer.remove(buffer.length -1)
             val vector = Vectors.dense(buffer.map(_.toDouble).toArray)
-            (label,vector)
-        }
+            var classlabel = 0.0 
+            if(label != "normal.") {
+                classlabel = 1.0
+            }
+            new LabeledPoint(classlabel, Vectors.dense(vector.toArray))
+   }
 
-    // run for all test data at once 
+   
 
-    
-    val testmat = new RowMatrix(labelTestData.values)
-    
-    val predictdata = testmat.multiply(pc).rows
-    var ind =0 
-    val testlabels = labelTestData.keys.toArray 
-   //  println(labelTestData.keys)  
-    
-    
-    val clustersLabelCount =  predictdata.map {line =>
-        val cluster = model.predict(line)
-        val label = testlabels.apply(ind)
-        ind += 1
+  val projectedtest = labelTestData.map(p => p.copy(features = pca.transform(p.features)))
+  
+  val clustersLabelCount =  projectedtest.map {point =>
+        val cluster = model.predict(point.features)
         
-    (cluster, label)
+    (cluster, point.label)
         }.countByValue
+  
 
- 
-    // val prediction = model.predict(predictdata)
-    
-    // prediction.foreach(println)
-     
-     /* val clustersLabelCount = labelTestData.map { case(label,datum) =>
-            // val rows=sc.parallelize(datum)
-            // val datums =  Vectors.dense(datum.toArray)
-           //  val vectorRdd = VectorRDDs.fromArrayRDD(datum.toArray)
-           //  val vectorRDD = sc.makeRDD(Vectors.dense(datum.toArray))
-            // val pcaData = new RowMatrix(vectorRDD)
-            val pcaData = Matrices.dense(1,36,datum.toArray)
-            val matData = pcaData.multiply(pc).rows
-            // println(matData)
-            val cluster = model.predict(matData)
-            (cluster, label)
-        }.countByValue 
-    */
-    // cluster and count
-       var TP =1L 
-       var FP =1L
-       var FN =1L
-       var TN =1L
+       var TP =0L 
+       var FP =0L
+       var FN =0L
+       var TN =0L
        clustersLabelCount.toSeq.foreach {
             case((cluster,label),count) =>
-        // println("label is : " + label)
-        // println("cluster is : " + cluster)
-        // println("actual cluster is : " + clustermap.get(cluster).get)
          clustermap.get(cluster) match {
          case Some(i) => 
-         if(label == "normal." && clustermap.get(cluster).get == "normal") {
+         if(label.toDouble == 0.0 && clustermap.get(cluster).get == "normal") {
                 TP += count
-         } else if (label != "normal." && clustermap.get(cluster).get =="normal" ) {
+         } else if (label.toDouble != 0.0  && clustermap.get(cluster).get  =="normal" ) {
                 FP += count
-         } else if (label != "normal." && clustermap.get(cluster).get !="normal") {
+         } else if (label != 0.0 && clustermap.get(cluster).get != "normal") {
                 TN +=  count
-         } else if (label == "normal." && clustermap.get(cluster).get != "normal") {
+         } else if (label == 0.0 && clustermap.get(cluster).get != "normal") {
                 FN +=  count
          }
         case None => println("Cluster number is: " + cluster)  
         }
-        
-    
-            
-            // println(f"$cluster%1s$label%18s$count%8s")
-        }  
+       }
 
    println("TP is : " + TP)
    println("FP is : " + FP)
@@ -182,6 +146,7 @@ object PCA {
    println("precision is : " + TP/(TP+FP)) 
    println("recall is : "+ TP/(TP+FN)) 
    sc.stop()
+    
         
  
   }
