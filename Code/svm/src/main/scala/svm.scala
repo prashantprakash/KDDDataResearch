@@ -8,7 +8,7 @@ object SVM {
     val filename = "/data/kddcupdata/supportvectors1";
     val testFilename ="/data/kddcupdata/testdata1";
     val rho = 49953 
-    val gamma = 1
+    val gamma = -1
     for (line <- Source.fromFile(testFilename).getLines()) {
          var kernel = 0.0
          for (line1 <- Source.fromFile(filename).getLines()) {
