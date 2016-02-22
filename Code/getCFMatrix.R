@@ -27,9 +27,9 @@ for(pre in valpred) {
     if(pre == TRUE && testdata[1,9] == 1.0) {
         TP <- TP +1
     } else if ( pre == FALSE && testdata[1,9] == 1.0) {
-        FP <- FP +1
-    } else if ( pre == TRUE && testdata[1,9] == 0.0) {
         FN <- FN +1
+    } else if ( pre == TRUE && testdata[1,9] == 0.0) {
+        FN <- FP +1
     } else if(pre == FALSE && testdata[1,9] == 0.0) {
         TN <- TN +1
     }
