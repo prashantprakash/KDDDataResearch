@@ -17,7 +17,7 @@ bindTraindata <- cbind(as.data.frame(pckTrainComponents),class=pcadata$V26)
 print ('projection of train data to K components is done')
 
 # save the pca train data to a file
-write(bindTraindata,"/Users/Prashant/pcatraindata",sep = ",", eol="\n")
+write.table(bindTraindata,"/Users/Prashant/pcatraindata",sep = ",", eol="\n")
 print ('saving pca train data ')
 
 # read validation file 
@@ -63,7 +63,7 @@ print ('Kmeans Model building is done')
 # iterate on train data and calculate distance from all centroids avaliable 
 
 i <- 0
-vecDistTrainData <- c()
+vecDistTrainData <- NULL
 for( i in 1:nrow(bindTraindata)) {
 	dist1 <- dist(rbind(kmeanmodel$centers[1,1:8],bindTraindata[i,1:8] ), method = "euclidean")
 	dist2 <- dist(rbind(kmeanmodel$centers[2,1:8],bindTraindata[i,1:8] ), method = "euclidean")
@@ -71,20 +71,20 @@ for( i in 1:nrow(bindTraindata)) {
 	dist4 <- dist(rbind(kmeanmodel$centers[4,1:8],bindTraindata[i,1:8] ), method = "euclidean")
 	dist5 <- dist(rbind(kmeanmodel$centers[5,1:8],bindTraindata[i,1:8] ), method = "euclidean")
 	localVector <- c(dist1,dist2,dist3,dist4,dist5,1.0)
-	vecDistTrainData<- append(vecDistTrainData,localVector) 
+	vecDistTrainData <- rbind(vecDistTrainData,localVector)
 
 }
 
 print ('The Distance calculation for Train data is done')
 
 # write distance of train data from all clusters to a file
-write(vecDistTrainData, file = "/data/kddcupdata/vectorindex", sep = "\n") 
+write.table(vecDistTrainData,"/Users/Prashant/pcatraindata",sep = ",", eol="\n")
 
 print ('Saving Distance for train data to a file is done')
 
 # iterate on validation data and calculate distance from all the centroids 
 j <- 0
-vecDistValData <- c() 
+vecDistValData <- NULL
 
 for( j in 1:nrow(bindValdata)) {
 	dist1 <- dist(rbind(kmeanmodel$centers[1,1:8],bindValdata[j,1:8] ), method = "euclidean")
@@ -92,20 +92,19 @@ for( j in 1:nrow(bindValdata)) {
 	dist3 <- dist(rbind(kmeanmodel$centers[3,1:8],bindValdata[j,1:8] ), method = "euclidean")
 	dist4 <- dist(rbind(kmeanmodel$centers[4,1:8],bindValdata[j,1:8] ), method = "euclidean")
 	dist5 <- dist(rbind(kmeanmodel$centers[5,1:8],bindValdata[j,1:8] ), method = "euclidean")
-	localVector <- c(dist1,dist2,dist3,dist4,dist5)
 	if(bindValdata[j,9] == "normal."){
-	localVector <- append(localVector,1.0)
+	localVector <- c(dist1,dist2,dist3,dist4,dist5,1.0)
 	} else {
-	localVector <- append(localVector,0.0)
+	localVector <- c(dist1,dist2,dist3,dist4,dist5,0.0)
 	}
-	vecDistValData<- append(vecDistTrainData,localVector) 
+	vecDistValData <- rbind(vecDistValData,localVector)
 
 }
 
 print ('The Distance calculation for Validation data is done')
 
 # write distance of train data from all clusters to a file
-write(vecDistValData, file = "/data/kddcupdata/vectorindex", sep = "\n") 
+write.table(vecDistValData, file = "/data/kddcupdata/vectorindex", sep = ",",eol="\n") 
 
 print ('Saving Distance for val  data to a file is done')
 
