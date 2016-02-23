@@ -169,15 +169,18 @@ FN <- 0
 pre <-0 
 index <- 1
 for(pre in testpred) {
-    if(pre == TRUE && bindTestdata[1,9] == "normal.") {
+    # print (pre)
+    # print (bindTestdata[1,9])
+    if(pre == TRUE && bindTestdata[index,9] == "normal.") {
         TP <- TP +1
-    } else if ( pre == FALSE && bindTestdata[1,9] == "normal.") {
+    } else if ( pre == FALSE && bindTestdata[index,9] == "normal.") {
         FN <- FN +1
-    } else if ( pre == TRUE && bindTestdata[1,9] != "normal.") {
+    } else if ( pre == TRUE && bindTestdata[index,9] != "normal.") {
         FN <- FP +1
-    } else if(pre == FALSE && bindTestdata[1,9] != "normal.") {
+    } else if(pre == FALSE && bindTestdata[index,9] != "normal.") {
         TN <- TN +1
     }
+    index <- index +1
 }
 
 print ('Confusion MAtrix is built ')
