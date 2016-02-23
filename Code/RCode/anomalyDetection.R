@@ -108,9 +108,86 @@ write.table(vecDistValData, file = "/data/kddcupdata/vectorindex", sep = ",",eol
 
 print ('Saving Distance for val  data to a file is done')
 
-# build SVM model from train data 
+# build SVM model from train data scaling is true as suggested
 
-svmDistmodel  <- svm(traindata, trainclass , type='one-classification' , nu=0.1 , scale = FALSE)
+svmDistmodel  <- svm(vecDistTrainData[,1:5], vecDistTrainData[,6] , type='one-classification' , nu=0.1 , scale = TRUE)
+print ('building model of distance is done')
+
+# save model 
+save(svmDistmodel, file = 'mydist_model.rda')
+print ('saving model is done')
+
+
+# make a prediction on validation data 
+valPred <- predict(model, vecDistValData[,1:5])
+print ('prediction on validation data is done')
+
+# write prediction to a file 
+write(valPred,"/Users/Prashant/valprediction",sep = "\n")
+print ('saving prediction of validation data into a file is done')
+
+# saving only rows which is predicted as normal from model
+pre <- 0
+
+noOutliers <- NULL # data frame after removing outliers
+outputclass <- NULL 
+k <-0 
+for( k in 1:nrow(bindValdata)) {
+	if(valPred[k] == TRUE &&  bindValdata[k,1:9] =="normal.") {
+		noOutliers <- rbind(noOutliers,bindValdata[k,1:9])
+		outputclass <- rbind(outputclass,1.0)
+	}
+}
+
+print ('dataframe after outlier removal is done')
+
+# write data after outliers removal to a file 
+write.table(noOutliers, file = "/data/kddcupdata/vectorindex", sep = ",",eol="\n")
+print ('saving data after outliers removal to a file is done')
+
+# build  svm model with the new dataset 
+featmodel  <- svm(noOutliers[,1:8], outputclass , type='one-classification' , nu=0.1)
+print ('building feature model is done')
+
+save(featmodel, file = 'feature_model.rda')
+print ('saving feature model is done')
+
+# prediction on test data 
+testpred <- predict(featmodel, bindTestdata[1:8], scale = FALSE)
+print('prediction on test data is done')
+
+# write prediction to a file 
+write(testpred,"/Users/Prashant/testprediction",sep = "\n")
+print ('saving prediction of test data into a file is done')
+
+TP <- 0 
+FP <- 0
+TN <- 0
+FN <- 0
+
+pre <-0 
+index <- 1
+for(pre in testpred) {
+    if(pre == TRUE && bindTestdata[1,9] == "normal.") {
+        TP <- TP +1
+    } else if ( pre == FALSE && bindTestdata[1,9] == "normal.") {
+        FN <- FN +1
+    } else if ( pre == TRUE && bindTestdata[1,9] != "normal.") {
+        FN <- FP +1
+    } else if(pre == FALSE && bindTestdata[1,9] != "normal.") {
+        TN <- TN +1
+    }
+}
+
+print ('Confusion MAtrix is built ')
+print ('TP : ' + TP)
+print ('FP : ' + FP)
+print ('TN : ' + TN)
+print ('FN : ' + FN)
+
+print ('Precision is :' + TP/(TP+FP))
+print ('Recall is : ' +  TP/(TP+FN))
+
 
 print ('task is done')
 
