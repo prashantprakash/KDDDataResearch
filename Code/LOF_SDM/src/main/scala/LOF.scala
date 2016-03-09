@@ -20,13 +20,13 @@ object LOF {
         conf.set("spark.storage.memoryFraction", "1");
     val sc = new SparkContext(conf)
     
-     val metadata = sc.textFile("/Users/Prashant/Downloads/spark-1.4.1/bin/normal")
+     val metadata = sc.textFile("/data/kddcupdata/kddcup.trasfrom")
         
     // train data only normal instances
-    val data = sc.textFile("/Users/Prashant/Downloads/spark-1.4.1/bin/normal")
+    val data = sc.textFile("/data/kddcupdata/kddcup.trasfrom.normal")
 
     // test data everything 
-    val testData =  sc.textFile("/Users/Prashant/Downloads/spark-1.4.1/bin/testdata")
+    val testData =  sc.textFile("/data/kddcupdata/corrected")
 
 
     // for feature expansion 
@@ -74,7 +74,7 @@ object LOF {
     val kmeanTraindata = projectedTrainData.map(line  => (line.features)) 
 
     // do k-means clustering 
-    val numClusters = 2 
+    val numClusters = 100
     val numIterations = 10     
     val kmeans = new KMeans()
     kmeans.setK(numClusters)
@@ -90,8 +90,85 @@ object LOF {
         centroidMap += ( clusterID -> line )
         clusterID += 1
     }
-   
-  
+  //  centroidMap.foreach(println)
+    println("centroid map is done")
+    val min_pts = 5
+    // build the outlier factor for every training data point in parallel by calling function 
+    // local_outlier_factor
+    // get local outlier degree of all train data 
+    val trainOutlierDegree = projectedTrainData.map{line =>
+        var outlierFactor = local_outlier_factor(min_pts,line.features,centroidMap)
+        (outlierFactor,1)
+     }
+
+     // trainOutlierDegree.foreach(println)
+
+
+    // take first 2% to decide threshold 
+     /* var firstN =  ((data.count() * 2)/100).toInt 
+     val sample = trainOutlierDegree.sortByKey().take(firstN)
+     // sample.foreach(println)
+     val threshold = sample.last.toString.split(',')(0).toDouble
+     println(threshold) */
+
+    val threshold = 1.0 // as given in the code
+     
+    // read test data and build features 
+    
+    val labelTestData = testData.map{line => 
+            val buffer = line.split(",").toBuffer
+            val protocol = buffer.remove(1)
+            val service = buffer.remove(1)
+            val tcpState = buffer.remove(1)
+            val label = buffer.remove(buffer.length - 1)
+            val vector = buffer.map(_.toDouble)
+
+            val newProtocolFeatures = new Array[Double](protocols.size)
+            newProtocolFeatures(protocols(protocol.trim)) = 1.0
+            val newServiceFeatures = new Array[Double](services.size)
+            newServiceFeatures(services(service.trim)) = 1.0
+            val newTcpStateFeatures = new Array[Double](tcpStates.size)
+            newTcpStateFeatures(tcpStates(tcpState.trim)) = 1.0
+            vector.insertAll(1, newTcpStateFeatures)
+            vector.insertAll(1, newServiceFeatures)
+            vector.insertAll(1, newProtocolFeatures)
+            // (label,Vectors.dense(vector.toArray))
+
+            var classlabel = 0.0 
+            if(label != "normal.") {
+                classlabel = 1.0
+            }
+       
+
+        new LabeledPoint(classlabel, Vectors.dense(vector.toArray))
+            
+   }
+
+    // project test data to pca
+    val projectedTestData = labelTestData.map(p => p.copy(features = pca.transform(p.features)))
+
+    // check for test data 
+
+    val testOutlierDegree = projectedTestData.map{line =>
+        var outlierDegree = local_outlier_factor(min_pts,line.features,centroidMap)
+        println(line.label+","+outlierDegree)
+        var classLabel = "noclass"
+        if(line.label == 0.0 && outlierDegree < threshold) {
+            // println("TP")
+            classLabel = "TP"
+        } else if(line.label != 0.0 && outlierDegree < threshold) {
+            classLabel = "FP"
+        } else if(line.label == 0.0 && outlierDegree > threshold) {
+            classLabel = "FN"
+        } else if(line.label != 0.0 && outlierDegree > threshold) {
+            classLabel = "TN"
+        }
+        (classLabel,1)
+     }
+    
+    testOutlierDegree.foreach(println)    
+
+
   
     }
 
@@ -102,6 +179,7 @@ object LOF {
     */
 
     def k_distance(k: Int , instance : Vector, centoridMap : Map[Int,Vector])  = {
+        // println("instance in k-distance is " + instance )
         var distances:Map[Double,Vector] = Map() 
         for ((k,v) <- centoridMap) {
             var distance_value = Math.sqrt(Vectors.sqdist(instance, v))
@@ -109,17 +187,19 @@ object LOF {
 
         }
         var distanceList = distances.toList.sortBy (_._1) 
-        var neighbours = new Array(k)
+        var neighbours = new Array[Vector](k)
         var k_distance = 0.0
         var index = 0
         for((k1,v) <- distances.take(k) ) {
             neighbours(index) = v
-            if(index == k) {
+            if(index == k-1) {
                 k_distance = k1
             }
+            index += 1
         }
+        // print("k-distacce is : "+ k_distance)
         //[neighbours.extend(n[1]) for n in distances[:k]]
-        return (k_distance, neighbours)
+        (k_distance, neighbours)
     }
 
 
@@ -132,7 +212,7 @@ object LOF {
          // get the k distance of the instance with its neighbors
          val (k_distance_value, neighbours) = k_distance(k, instance2, centoridmap)
          // reachability distance is maximum distance between the k-th distance and euclidean distance 
-         return  Math.max(k_distance_value,Math.sqrt(Vectors.sqdist(instance1,instance2)))
+        (Math.max(k_distance_value,Math.sqrt(Vectors.sqdist(instance1,instance2))))
 
     }
 
@@ -146,12 +226,12 @@ object LOF {
     def local_reachability_density(min_pts : Int , instance : Vector, centroidMap : Map[Int,Vector]) = {
         // get the k-distacne value and all k neighbors of given instance
         val (k_distance_value, neighbours) = k_distance(min_pts, instance, centroidMap)
-        var reachability_distances_array = Array.fill(neighbours.length){0} 
-        for ((k,v) <- centroidMap ) {
-            reachability_distances_array(k) = reachability_distance(min_pts, instance, v,centroidMap)
+        var reachability_distances_array = Array.fill(neighbours.length){0.0} 
+        for (i <- 0 until neighbours.length -1) {
+            reachability_distances_array(i) = reachability_distance(min_pts, instance, neighbours(i),centroidMap)
         }
 
-        return neighbours.length/reachability_distances_array.sum
+         (neighbours.length/reachability_distances_array.sum)
 
 
     }
@@ -168,18 +248,18 @@ object LOF {
         // calculate lrd value for the given point 
         val instance_lrd = local_reachability_density(min_pts, instance, centoridmap)
 
-        val lrd_ratios_array = Array.fill(neighbours.length){0} 
+        val lrd_ratios_array = Array.fill(neighbours.length){0.0} 
 
         // calculate lrd for all instance point for all the cluster centers 
 
-        for ((k,v) <- centoridmap) {
+        for( i <- 0 until neighbours.length - 1) {
             // we have to remove the processing row from map 
-
-            val neighbour_lrd  = local_reachability_density(min_pts, v, centoridmap)
-            lrd_ratios_array(k) = neighbour_lrd/instance_lrd
+           // println(" processing neighbor " + neighbours(i))
+            val neighbour_lrd  = local_reachability_density(min_pts, neighbours(i), centoridmap)
+            lrd_ratios_array(i) = (1.0 * neighbour_lrd)/instance_lrd
         }
 
-        return lrd_ratios_array.sum / neighbours.length
+        (lrd_ratios_array.sum / neighbours.length)
 
     }
 
