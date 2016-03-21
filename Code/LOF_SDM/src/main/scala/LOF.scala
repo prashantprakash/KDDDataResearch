@@ -74,7 +74,8 @@ object LOF {
     val kmeanTraindata = projectedTrainData.map(line  => (line.features)) 
 
     // do k-means clustering 
-    val numClusters = 100
+    // val numClusters = 100
+    val numClusters = args(0).toInt
     val numIterations = 10     
     val kmeans = new KMeans()
     kmeans.setK(numClusters)
@@ -101,37 +102,18 @@ object LOF {
     val pointsPerCluster = projectedTrainData.map{line =>
            
            var clusterID = model.predict(line.features)
-           /* // println ("cluster id is : " + clusterID)
-           if (pointsCountMap contains clusterID ) {
-               // println ("already and cluster id is: " + clusertID  )
-                var count = pointsCountMap(clusterID)
-               // println ("count is : " + count)
-                 // println ("already and cluster id is: " + clusterID + " and previous count is : " + count )
-                pointsCountMap += (clusterID -> (count + 1))
-           } else{
-               //  println("first time")
-
-                println ("first and cluster id is: " + clusterID )
-
-                pointsCountMap += (clusterID -> 1)
-           }
-
-        println(pointsCountMap)*/
-
         (clusterID)
     }.countByValue
     
     pointsPerCluster.toSeq.sorted.foreach {
             case((clusterID),count) =>
-             // println(f"$cluster%1s$label%18s$count%8s")
-            //  println(clusterID +" : Count :" + count)
             pointsCountMap += (clusterID -> count)
         }
  
   
   //  centroidMap.foreach(println)
     println("centroid map is done")
-    val min_pts = 5
+    val min_pts = args(1).toInt
     // build the outlier factor for every training data point in parallel by calling function 
     // local_outlier_factor
     // get local outlier degree of all train data 
@@ -147,8 +129,9 @@ object LOF {
      var firstN =  ((data.count() * 98)/100).toInt 
      val sample = trainOutlierDegree.sortByKey().take(firstN)
      // sample.foreach(println)
-     val threshold = sample.last.toString.split(',')(0).toDouble
-     println(threshold)
+     var threshold1 = sample.last.toString.split(',')(0).substring(1)
+     println(threshold1)
+     var threshold = threshold1.toDouble
 
    // val threshold = 1.0 // as given in the code
      
