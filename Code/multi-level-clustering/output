@@ -1,0 +1,73 @@
+Second level clusters = 2
+TP is : 57685
+FP is : 18969
+TN is : 231467
+FN is : 2906
+precision is : 0.75253737
+recall is : 0.95203906
+Accuracy is :0.9296685
+
+Second level clusters = 3
+TP is : 27395
+FP is : 1386
+TN is : 249050
+FN is : 33196
+precision is : 0.9518432
+recall is : 0.45212984
+Accuracy is :0.8888135
+
+
+
+Second level clusters = 4
+TP is : 33234
+FP is : 32634
+TN is : 217802
+FN is : 27357
+precision is : 0.50455457
+recall is : 0.5484973
+Accuracy is :0.80711967
+
+
+Second level clusters = 5
+TP is : 28556
+FP is : 38885
+TN is : 211551
+FN is : 32035
+precision is : 0.42342195
+recall is : 0.47129112
+Accuracy is :0.77198124
+
+Second level clusters = 6
+TP is : 57776
+FP is : 18760
+TN is : 231676
+FN is : 2815
+precision is : 0.75488657
+recall is : 0.953541
+Accuracy is :0.930633
+
+
+Second level clusters = 10
+TP is : 57043
+FP is : 18612
+TN is : 231824
+FN is : 3548
+precision is : 0.7539885
+recall is : 0.94144344
+Accuracy is :0.9287522
+
+
+Second level clusters = 20
+
+
+
+Second level clusters = 30
+TP is : 41298
+FP is : 2000
+TN is : 248413
+FN is : 19280
+precision is : 0.9538085
+recall is : 0.68173265
+Accuracy is :0.93157357
+
+
